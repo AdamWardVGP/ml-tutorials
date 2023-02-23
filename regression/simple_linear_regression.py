@@ -51,3 +51,11 @@ plt.ylabel('Salary')
 plt.show()
 
 # Linear regressions are good only if there is a linear correlation between the features and targets
+
+# Once we've plotted our data we can make predictions with it
+# Note the predict takes a 2d array, hence wrapping it twice [[x]]
+print(f'Prediction for 12 {lr.predict([[12]])}')
+
+# Or we can find the coefficients
+print(f'Coefficient {lr.coef_}')
+print(f'Intercept {lr.intercept_}')
