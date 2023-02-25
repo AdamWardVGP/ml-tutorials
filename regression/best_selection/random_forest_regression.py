@@ -26,4 +26,4 @@ np.set_printoptions(precision=2)
 print(np.concatenate((y_predicted.reshape(len(y_predicted), 1), y_test.reshape(len(y_test), 1)), 1))
 
 # Evaluating the Model Performance
-r2_score(y_test, y_predicted)
+print(f'r2={r2_score(y_test, y_predicted)}')
