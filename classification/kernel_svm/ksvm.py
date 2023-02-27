@@ -29,7 +29,7 @@ x_test = training_scaler.transform(x_test)
 
 print(f'x:\n{x_train}\n\ny:\n{y_train}')
 
-classifier = svm.SVC(kernel='linear', random_state=0)
+classifier = svm.SVC(kernel='rbf', random_state=0)
 classifier.fit(x_train, y_train)
 
 # Running a sample test will also need to be transformed
@@ -51,21 +51,23 @@ print(f'accuracy {accuracy_score(y_test, y_predicted)}')
 ConfusionMatrixDisplay(confusion_m).plot()
 pyplot.show()
 
+print('confusion matrix shown')
 # visualize training data
 x_set, y_set = training_scaler.inverse_transform(x_train), y_train
-
-x1, x2 = np.meshgrid(np.arange(start=x_set[:, 0].min() - 10, stop=x_set[:, 0].max() + 10, step=0.5),
-                     np.arange(start=x_set[:, 1].min() - 1000, stop=x_set[:, 1].max() + 1000, step=1))
+print('inv transform')
+x1, x2 = np.meshgrid(np.arange(start=x_set[:, 0].min() - 10, stop=x_set[:, 0].max() + 10, step=.5),
+                     np.arange(start=x_set[:, 1].min() - 1000, stop=x_set[:, 1].max() + 1000, step=5))
+print('grid')
 pyplot.contourf(x1, x2,
                 classifier.predict(training_scaler.transform(np.array([x1.ravel(), x2.ravel()]).T)).reshape(x1.shape),
                 alpha=0.75, cmap=ListedColormap(('red', 'green')))
-
+print('contour')
 pyplot.xlim(x1.min(), x1.max())
 pyplot.ylim(x2.min(), x2.max())
-
+print('limits')
 for i, j in enumerate(np.unique(y_set)):
     pyplot.scatter(x_set[y_set == j, 0], x_set[y_set == j, 1], c=ListedColormap(('red', 'green'))(i), label=j)
-
+print('scattered')
 pyplot.title('Logistic Regression (Training set)')
 pyplot.xlabel('Age')
 pyplot.ylabel('Estimated Salary')
@@ -74,8 +76,8 @@ pyplot.show()
 
 # visualize test data
 x_set, y_set = training_scaler.inverse_transform(x_test), y_test
-x1, x2 = np.meshgrid(np.arange(start=x_set[:, 0].min() - 10, stop=x_set[:, 0].max() + 10, step=0.5),
-                     np.arange(start=x_set[:, 1].min() - 1000, stop=x_set[:, 1].max() + 1000, step=1))
+x1, x2 = np.meshgrid(np.arange(start=x_set[:, 0].min() - 10, stop=x_set[:, 0].max() + 10, step=.5),
+                     np.arange(start=x_set[:, 1].min() - 1000, stop=x_set[:, 1].max() + 1000, step=5))
 pyplot.contourf(x1, x2, classifier.predict(training_scaler.transform(np.array([x1.ravel(), x2.ravel()]).T)).reshape(x1.shape),
                 alpha=0.75, cmap=ListedColormap(('red', 'green')))
 pyplot.xlim(x1.min(), x1.max())
