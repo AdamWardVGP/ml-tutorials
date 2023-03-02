@@ -5,9 +5,8 @@ import numpy as np
 from matplotlib import pyplot
 from matplotlib.colors import ListedColormap
 import pandas as pd
-from sklearn.impute import KNNImputer
+from sklearn import naive_bayes
 from sklearn.model_selection import train_test_split
-from sklearn.neighbors import KNeighborsClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import ConfusionMatrixDisplay, accuracy_score
 from sklearn.metrics import confusion_matrix
@@ -26,19 +25,18 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.25, random
 training_scaler = StandardScaler()
 x_train = training_scaler.fit_transform(x_train)
 # same scaler is used for the test set to ensure its values are the same range
-x_test = training_scaler.fit_transform(x_test)
+x_test = training_scaler.transform(x_test)
 
 print(f'x:\n{x_train}\n\ny:\n{y_train}')
 
-
-classifier = KNeighborsClassifier(n_neighbors=5, metric='minkowski', p=2)
+classifier = naive_bayes.GaussianNB()
 classifier.fit(x_train, y_train)
 
 # Running a sample test will also need to be transformed
 x_sample = training_scaler.transform([[30, 87000]])
 sample_prediction = classifier.predict(x_sample)
-sample_probability = classifier.predict_proba(x_sample)
-print(f'sample prediction: {sample_prediction}, probability: {sample_probability}')
+# sample_probability = classifier.predict_proba(x_sample) not available with SVC probability= false
+print(f'sample prediction: {sample_prediction}')
 
 y_predicted = classifier.predict(x_test)
 
@@ -56,8 +54,8 @@ pyplot.show()
 # visualize training data
 x_set, y_set = training_scaler.inverse_transform(x_train), y_train
 
-x1, x2 = np.meshgrid(np.arange(start=x_set[:, 0].min() - 10, stop=x_set[:, 0].max() + 10, step=0.25),
-                     np.arange(start=x_set[:, 1].min() - 1000, stop=x_set[:, 1].max() + 1000, step=0.25))
+x1, x2 = np.meshgrid(np.arange(start=x_set[:, 0].min() - 10, stop=x_set[:, 0].max() + 10, step=0.3),
+                     np.arange(start=x_set[:, 1].min() - 1000, stop=x_set[:, 1].max() + 1000, step=0.3))
 pyplot.contourf(x1, x2,
                 classifier.predict(training_scaler.transform(np.array([x1.ravel(), x2.ravel()]).T)).reshape(x1.shape),
                 alpha=0.75, cmap=ListedColormap(('red', 'green')))
@@ -68,7 +66,7 @@ pyplot.ylim(x2.min(), x2.max())
 for i, j in enumerate(np.unique(y_set)):
     pyplot.scatter(x_set[y_set == j, 0], x_set[y_set == j, 1], c=ListedColormap(('red', 'green'))(i), label=j)
 
-pyplot.title('K Nearest Neighbors (Training set)')
+pyplot.title('Gaussian Naive Bayes (Training set)')
 pyplot.xlabel('Age')
 pyplot.ylabel('Estimated Salary')
 pyplot.legend()
@@ -76,15 +74,15 @@ pyplot.show()
 
 # visualize test data
 x_set, y_set = training_scaler.inverse_transform(x_test), y_test
-x1, x2 = np.meshgrid(np.arange(start=x_set[:, 0].min() - 10, stop=x_set[:, 0].max() + 10, step=0.25),
-                     np.arange(start=x_set[:, 1].min() - 1000, stop=x_set[:, 1].max() + 1000, step=0.25))
+x1, x2 = np.meshgrid(np.arange(start=x_set[:, 0].min() - 10, stop=x_set[:, 0].max() + 10, step=0.3),
+                     np.arange(start=x_set[:, 1].min() - 1000, stop=x_set[:, 1].max() + 1000, step=0.3))
 pyplot.contourf(x1, x2, classifier.predict(training_scaler.transform(np.array([x1.ravel(), x2.ravel()]).T)).reshape(x1.shape),
                 alpha=0.75, cmap=ListedColormap(('red', 'green')))
 pyplot.xlim(x1.min(), x1.max())
 pyplot.ylim(x2.min(), x2.max())
 for i, j in enumerate(np.unique(y_set)):
     pyplot.scatter(x_set[y_set == j, 0], x_set[y_set == j, 1], c=ListedColormap(('red', 'green'))(i), label=j)
-pyplot.title('K Nearest Neighbors (Test set)')
+pyplot.title('Gaussian Naive Bayes (Test set)')
 pyplot.xlabel('Age')
 pyplot.ylabel('Estimated Salary')
 pyplot.legend()
