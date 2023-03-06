@@ -4,7 +4,7 @@ from sklearn.svm import SVC
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
-dataset = pd.read_csv('Data.csv')
+dataset = pd.read_csv('../../data/Cancer_Cell.csv')
 X = dataset.iloc[:, :-1].values
 y = dataset.iloc[:, -1].values
 

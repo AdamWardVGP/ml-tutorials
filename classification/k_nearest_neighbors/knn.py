@@ -13,7 +13,7 @@ from sklearn.metrics import ConfusionMatrixDisplay, accuracy_score
 from sklearn.metrics import confusion_matrix
 
 # Importing the dataset
-dataset = pd.read_csv('Social_Network_Ads.csv')
+dataset = pd.read_csv('../../data/Social_Network_Ads.csv')
 x = dataset.iloc[:, :-1].values
 y = dataset.iloc[:, -1].values
 

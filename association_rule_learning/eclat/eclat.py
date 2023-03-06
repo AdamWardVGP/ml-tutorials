@@ -11,7 +11,7 @@
 import apyori
 import pandas
 
-dataset = pandas.read_csv("../data/Market_Basket_Optimisation.csv", header=None)
+dataset = pandas.read_csv("../../data/Market_Basket_Optimisation.csv", header=None)
 
 transactions = []
 for i in range(0, 7501):

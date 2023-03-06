@@ -4,7 +4,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.naive_bayes import GaussianNB
 from sklearn.metrics import confusion_matrix, accuracy_score
 
-dataset = pd.read_csv('Data.csv')
+dataset = pd.read_csv('../../data/Cancer_Cell.csv')
 X = dataset.iloc[:, :-1].values
 y = dataset.iloc[:, -1].values
 
