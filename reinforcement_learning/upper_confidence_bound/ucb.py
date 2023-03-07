@@ -70,3 +70,5 @@ pyplot.title('Histogram of Ad Selections')
 pyplot.xlabel('Ads')
 pyplot.ylabel('Ad Selection Count')
 plt.show()
+
+print(f'total reward {total_reward}')
