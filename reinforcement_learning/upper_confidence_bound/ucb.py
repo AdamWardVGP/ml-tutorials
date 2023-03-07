@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import pandas
-import sklearn
 from math import log
+from math import sqrt
 from matplotlib import pyplot
 
 # click-through rate of ads
@@ -20,7 +20,7 @@ class ItemStat:
         return self.reward_sum / self.num_selected
 
     def calc_deltaI(self, round_number):
-        return (3 / 2) * log(round_number + 1) / self.num_selected
+        return sqrt((3 / 2) * log(round_number + 1) / self.num_selected)
 
     def calc_max_conf(self, round_number):
         if self.num_selected == 0:
@@ -36,7 +36,7 @@ class ItemStat:
         self.reward_sum = self.reward_sum + reward
 
 
-num_users = 500
+num_users = 10000
 num_ads = 10
 stats = [ItemStat(), ItemStat(), ItemStat(), ItemStat(), ItemStat(), ItemStat(),
          ItemStat(), ItemStat(), ItemStat(), ItemStat()]
@@ -44,7 +44,7 @@ selected_ads = []
 total_reward = 0
 
 for round_index in range(0, num_users):
-
+    print(f'---------round {round_index}----------')
     # search through all ad indexes and see which has the current highest confidence
     selected_index = 0
     max_confidence_bound = 0
