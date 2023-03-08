@@ -1,15 +1,10 @@
 # Multiple Linear Regression
 
 # Importing the libraries
-import numpy as np
-import sklearn.feature_extraction.text
 from matplotlib import pyplot
-from matplotlib.colors import ListedColormap
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn import naive_bayes
-from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import ConfusionMatrixDisplay, accuracy_score
 from sklearn.metrics import confusion_matrix
 from sklearn.feature_extraction.text import CountVectorizer
